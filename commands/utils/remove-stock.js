@@ -6,8 +6,8 @@ const fs = require('fs')
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('remove-stock')
-    .setDescription('Adds a token to the stock.')
+    .setName('removestock')
+    .setDescription('Removes a token from the stock.')
     .addStringOption(option =>
         option.setName('token')
             .setDescription('The boost token to be removed. (multiple tokens in this format -> token, token2 ...)')
