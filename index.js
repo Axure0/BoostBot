@@ -5,7 +5,7 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds] })
 
 client.commands = new Collection()
 
-require('./handlers/deployCommands')()
-require('./handlers/handler')(client)
+require('./deployCommands')()
+require('./handler')(client)
 
 client.login(token)

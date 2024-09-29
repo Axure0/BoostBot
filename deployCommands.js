@@ -1,12 +1,12 @@
 module.exports = () => {
     const { REST, Routes } = require('discord.js');
-    const { clientId, token } = require('../config.json');
+    const { clientId, token } = require('./config.json');
     const fs = require('fs');
     const path = require('path');
 
     const commands = [];
 
-    const foldersPath = path.join(process.cwd(), 'commands');
+    const foldersPath = path.join(__dirname, 'commands');
     const commandFolders = fs.readdirSync(foldersPath);
 
     for (const folder of commandFolders) {
