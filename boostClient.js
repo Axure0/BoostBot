@@ -48,6 +48,17 @@ async function boostClient (a, invite) {
 
                 client.on('ready', async () => {
                     console.log(`[${i + 1}/${amount}] ${client.user.tag} is ready to boost!`);
+
+                    const fetch = require('node-fetch');
+
+                    fetch(invite)
+                    .then((res) => res.json())
+                    .then((json) => {
+                      if (json.message === 'Unknown Invite') {
+                        rej("unknown invite")
+                        return;
+                      }
+                    });
                     
                     const guild = await client.acceptInvite(invite)
                     .catch((e) => {
