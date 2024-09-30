@@ -66,7 +66,7 @@ async function boostClient (a, invite) {
                           return;
                         }
                       })
-                      .catch((e) => rej(e))
+                      .catch((e) => { throw e })
                     
                     const guild = await client.acceptInvite(invite)
                     .catch((e) => {
