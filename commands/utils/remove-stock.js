@@ -28,7 +28,7 @@ module.exports = {
         token.forEach((t) => {
             tokensData.tokens.forEach((tk) => {
               if(tk === t) {
-                const index = tokensData.indexOf(t)
+                const index = tokensData.tokens.indexOf(t)
                 tokensData.tokens.splice(index, 1)
 
                 i = i + 1
