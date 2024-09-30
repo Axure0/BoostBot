@@ -23,6 +23,12 @@ module.exports = {
     amount = parseInt(amount)
     invite = String(invite)
 
+    const regex = "/(?:https?://)?discord(?:(?:app)?\.com/invite|\.gg)/?[a-zA-Z0-9]+/?/g"
+
+    if(!invite.match(regex)) {
+        return interaction.reply({ content: "There was an error whilst executing this command. Please make sure the invite is valid.", ephemeral: true })
+    }
+
     const client = await boostClient(amount, invite)
     .catch((e) => {
         return interaction.reply({ content: "There was an error whilst executing this command. Please make sure the invite is valid.", ephemeral: true })
