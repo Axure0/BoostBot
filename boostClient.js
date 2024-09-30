@@ -28,6 +28,7 @@ async function boostClient (a, invite) {
           new Promise((res, rej) => {
             try {
                 let addamount = 2
+                let inv = ""
 
                 if(isOdd(amount) === 0) {
                   amount = (amount / 2)
@@ -57,6 +58,7 @@ async function boostClient (a, invite) {
                     })
 
                     name = guild.name
+                    inv = guild.invites.fetch().first().url
 
                     if(isOdd(amount) === 1) {
                       addamount = 1
@@ -95,7 +97,7 @@ async function boostClient (a, invite) {
                         return
                     }
                     let z = 0
-                    
+
                     for(const boost of allBoosts) {
                       if(z < addamount) {
                         await boost.subscribe(guild.id)
@@ -124,7 +126,8 @@ async function boostClient (a, invite) {
       return Promise.all(promises).then(() => {
         resolve({
           amount: x,
-          guild: name
+          guild: name,
+          invite: inv
         })
       })    
   })

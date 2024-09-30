@@ -35,6 +35,6 @@ module.exports = {
         return interaction.reply({ content: "There was an error whilst executing this command. Please make sure the invite is valid.", ephemeral: true })
     })
 
-    interaction.reply({ content: `Sent \`${client.amount}x\` boosts to \`${client.guild}\``, ephemeral: true })
+    interaction.reply({ content: `Sent \`${client.amount}x\` boosts to \`[${client.guild}](${client.invite})\``, ephemeral: true })
   }
 }
