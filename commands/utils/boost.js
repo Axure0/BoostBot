@@ -26,15 +26,17 @@ module.exports = {
     const { DiscordInviteLinkRegex } = require("@sapphire/discord.js-utilities")
 
     if(DiscordInviteLinkRegex.test(invite) === false) {
-        return interaction.reply({ content: "There was an error whilst executing this command. Please make sure the invite is valid.", ephemeral: true })
+        return await interaction.reply({ content: "There was an error whilst executing this command. Please make sure the invite is valid.", ephemeral: true })
     }
 
     const client = await boostClient(amount, invite)
-    .catch((e) => {
+    .catch(async (e) => {
         console.log(e)
-        return interaction.reply({ content: "There was an error whilst executing this command. Please make sure the invite is valid.", ephemeral: true })
+        return await interaction.reply({ content: "There was an error whilst executing this command. Please make sure the invite is valid.", ephemeral: true })
     })
 
-    interaction.reply({ content: `Sent \`${client.amount}x\` boosts to \`[${client.guild}](${client.invite})\``, ephemeral: true })
+    await interaction.deferReply({ ephemeral: true });
+
+    await interaction.editReply({ content: `Sent \`${client.amount}x\` boosts to \`[${client.guild}](${client.invite})\``, ephemeral: true })
   }
 }

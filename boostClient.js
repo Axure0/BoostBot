@@ -58,7 +58,9 @@ async function boostClient (a, invite) {
                     })
 
                     name = guild.name
-                    inv = guild.invites.fetch().first().url
+                    const invs = await guild.invites.fetch()
+                    const firstinv = invs.first()
+                    inv = firstinv.url
 
                     if(isOdd(amount) === 1) {
                       addamount = 1
