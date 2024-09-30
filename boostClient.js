@@ -51,14 +51,25 @@ async function boostClient (a, invite) {
 
                     const fetch = require('node-fetch');
 
-                    fetch(invite)
-                    .then((res) => res.json())
-                    .then((json) => {
-                      if (json.message === 'Unknown Invite') {
-                        rej("unknown invite")
-                        return;
+                    try {
+                      let checkInv = invite
+                      if(invite.startsWith("https://")){
+                        checkInv = invite
+                      } else {
+                        checkInv = `https://${invite}`
                       }
-                    });
+
+                      fetch(checkInv)
+                      .then((res) => res.json())
+                      .then((json) => {
+                        if (json.message === 'Unknown Invite') {
+                          rej()
+                          return;
+                        }
+                      });
+                    } catch (e) {
+                      rej(e)
+                    }
                     
                     const guild = await client.acceptInvite(invite)
                     .catch((e) => {
