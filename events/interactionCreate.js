@@ -1,9 +1,17 @@
 const { Events } = require('discord.js');
 
+const { whitelisted } = require('../config.json')
+
 module.exports = {
 	name: Events.InteractionCreate,
 	async execute(interaction) {
 		if (!interaction.isChatInputCommand()) return;
+
+		whitelisted.forEach((w) => {
+			if(interaction.user.id !== w) {
+				return interaction.reply({ content: "You do not have permission to use this command!", ephemeral: true })
+			}
+		})
 
 		const command = interaction.client.commands.get(interaction.commandName);
 
