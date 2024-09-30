@@ -20,6 +20,8 @@ async function boostClient (a, invite) {
         amount = tokens.length
       }
 
+      let inv = ""
+
       let x = 0
       let name = ""
       let promises = []
@@ -28,7 +30,6 @@ async function boostClient (a, invite) {
           new Promise((res, rej) => {
             try {
                 let addamount = 2
-                let inv = ""
 
                 if(isOdd(amount) === 0) {
                   amount = (amount / 2)
