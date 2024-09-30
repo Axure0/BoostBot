@@ -29,13 +29,13 @@ module.exports = {
         return await interaction.reply({ content: "There was an error whilst executing this command. Please make sure the invite is valid.", ephemeral: true })
     }
 
+    await interaction.deferReply({ ephemeral: true });
+
     const client = await boostClient(amount, invite)
     .catch(async (e) => {
         console.log(e)
         return await interaction.reply({ content: "There was an error whilst executing this command. Please make sure the invite is valid.", ephemeral: true })
     })
-
-    await interaction.deferReply({ ephemeral: true });
 
     await interaction.editReply({ content: `Sent \`${client.amount}x\` boosts to \`[${client.guild}](${client.invite})\``, ephemeral: true })
   }

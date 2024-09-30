@@ -1,7 +1,6 @@
 const { Client } = require('discord.js-selfbot-v13');
 
 const { tokens } = require('./tokens.json')
-const tokenData = require('./tokens.json')
 const { captchaKey, emptyTransfer } = require('./config.json')
 
 const Captcha = require('2captcha');
@@ -72,34 +71,36 @@ async function boostClient (a, invite) {
                     } else {
                       addamount = 2
                     }
-                    
-                    const allBoosts = await client.billing.fetchGuildBoosts()
-                    if(emptyTransfer === "true" && allBoosts.size == 0) {
-                        console.log(`[${i + 1}/${amount}] ${client.user.tag} has no boosts. Removing token...`)
-                        
-                        let token
+
+                    const data = JSON.parse(fs.readFileSync('./tokens.json', "utf8"))
+
+                    let token
                         
                         tokens.forEach((t) => {
                             if(t === client.token) {
                                 token = t
                             }
                         })
+                    
+                    const allBoosts = await client.billing.fetchGuildBoosts()
+                    if(emptyTransfer === "true" && allBoosts.size == 0) {
+                        console.log(`[${i + 1}/${amount}] ${client.user.tag} has no boosts. Removing token...`)
 
                         if(!token) {
                             res()
                             return
                         }
                         
-                        let arr2 = tokenData.empty
+                        let arr2 = data.empty
                         arr2.push(token)
-                        tokenData.empty = arr2
+                        data.empty = arr2
                         
-                        let arr = tokenData.tokens
+                        let arr = data.tokens
                         const index = arr.indexOf(token)
                         arr.splice(index, 1)
-                        tokenData.tokens = arr
+                        data.tokens = arr
                         
-                        fs.writeFileSync('./tokens.json', JSON.stringify(tokenData, null, 2));
+                        fs.writeFileSync('./tokens.json', JSON.stringify(data, null, 2));
                         res()
                         return
                     }
@@ -111,6 +112,17 @@ async function boostClient (a, invite) {
                       }
                       z = z + 1
                     }
+
+                    let arr2 = data.used
+                    arr2.push(token)
+                    data.used = arr2
+                        
+                    let arr = data.tokens
+                    const index = arr.indexOf(token)
+                    arr.splice(index, 1)
+                    data.tokens = arr
+                        
+                    fs.writeFileSync('./tokens.json', JSON.stringify(data, null, 2));
                     
                     x = x + 1
                     amount = (amount - addamount)
