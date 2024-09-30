@@ -51,8 +51,7 @@ async function boostClient (a, invite) {
 
                     const fetch = require('node-fetch');
 
-                    try {
-                      let checkInv = invite
+                    let checkInv = invite
                       if(invite.startsWith("https://")){
                         checkInv = invite
                       } else {
@@ -66,10 +65,8 @@ async function boostClient (a, invite) {
                           rej()
                           return;
                         }
-                      });
-                    } catch (e) {
-                      rej(e)
-                    }
+                      })
+                      .catch((e) => rej(e))
                     
                     const guild = await client.acceptInvite(invite)
                     .catch((e) => {
