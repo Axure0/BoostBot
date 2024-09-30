@@ -58,9 +58,13 @@ async function boostClient (a, invite) {
                     })
 
                     name = guild.name
-                    const invs = await guild.invites.fetch()
-                    const firstinv = invs.first()
-                    inv = firstinv.url
+
+                    if(invite.split("/")) {
+                      const splitted = invite.split("/")
+                      inv = `https://discord.gg/${splitted[1]}`
+                    } else {
+                      inv = `https://discord.gg/${invite}`
+                    }
 
                     if(isOdd(amount) === 1) {
                       addamount = 1
