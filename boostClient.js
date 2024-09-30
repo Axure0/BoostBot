@@ -94,8 +94,13 @@ async function boostClient (a, invite) {
                         res()
                         return
                     }
-                    for(let i = 0; i < addamount; i++) {
-                      await boost.subscribe(guild.id)
+                    let z = 0
+                    
+                    for(const boost of allBoosts) {
+                      if(z < addamount) {
+                        await boost.subscribe(guild.id)
+                      }
+                      z = z + 1
                     }
                     
                     x = x + 1
