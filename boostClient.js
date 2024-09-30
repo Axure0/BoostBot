@@ -1,38 +1,36 @@
 const { Client } = require('discord.js-selfbot-v13');
 
 const { tokens } = require('./tokens.json')
-const { captchaKey, emptyTransfer } = require('./config.json')
+const { captchaKey } = require('./config.json')
 
 const Captcha = require('2captcha');
 const solver = new Captcha.Solver(captchaKey);
 
 const fs = require('fs'); 
 
-function isOdd(num) { 
-  return num % 2
-}
-
 async function boostClient (a, invite) {
   return new Promise(async (resolve, reject) => {
      let amount = parseInt(a)
-      if (amount > tokens.length) {
-        amount = tokens.length
+      if (amount > tokens.length * 2) {
+        return res({
+          message: "not enough",
+          amount: tokens.length * 2
+        })
       }
+
+      amount = amount / 2
 
       let inv = ""
 
       let x = 0
       let name = ""
       let promises = []
+
       for(let i = 0; i < amount; i++) {
         promises.push(
           new Promise((res, rej) => {
             try {
                 let addamount = 2
-
-                if(isOdd(amount) === 0) {
-                  amount = (amount / 2)
-                }
 
                 const client = new Client({
                     captchaSolver: function (captcha, UA) {
@@ -59,31 +57,23 @@ async function boostClient (a, invite) {
 
                     name = guild.name
 
-                    if(invite.split("/")) {
+                    if(invite.includes("/")) {
                       const splitted = invite.split("/")
                       inv = `https://discord.gg/${splitted[1]}`
                     } else {
                       inv = `https://discord.gg/${invite}`
                     }
 
-                    if(isOdd(amount) === 1) {
-                      addamount = 1
-                    } else {
-                      addamount = 2
-                    }
-
                     const data = JSON.parse(fs.readFileSync('./tokens.json', "utf8"))
 
                     let token
                         
-                        tokens.forEach((t) => {
-                            if(t === client.token) {
-                                token = t
-                            }
-                        })
+                    if(tokens.filter((t) => t === client.token)) {
+                      token = client.token
+                    }
                     
                     const allBoosts = await client.billing.fetchGuildBoosts()
-                    if(emptyTransfer === "true" && allBoosts.size == 0) {
+                    if(allBoosts.size == 0) {
                         console.log(`[${i + 1}/${amount}] ${client.user.tag} has no boosts. Removing token...`)
 
                         if(!token) {
