@@ -23,11 +23,9 @@ module.exports = {
     amount = parseInt(amount)
     invite = String(invite)
 
-    const regex = "/(?:https?://)?discord(?:(?:app)?\.com/invite|\.gg)/?[a-zA-Z0-9]+/?/g"
+    const { DiscordInviteLinkRegex } = require("@sapphire/discord.js-utilities")
 
-    console.log(invite.match(regex))
-
-    if(!invite.match(regex)) {
+    if(DiscordInviteLinkRegex.test(invite) === false) {
         return interaction.reply({ content: "There was an error whilst executing this command. Please make sure the invite is valid.", ephemeral: true })
     }
 
