@@ -57,12 +57,8 @@ async function boostClient (a, invite) {
 
                     name = guild.name
 
-                    if(invite.includes("/")) {
-                      const splitted = invite.split("/")
-                      inv = `https://discord.gg/${splitted[1]}`
-                    } else {
-                      inv = `https://discord.gg/${invite}`
-                    }
+                    const splitted = invite.split(".gg/")
+                    inv = `https://discord.gg/${splitted[1]}`
 
                     const data = JSON.parse(fs.readFileSync('./tokens.json', "utf8"))
 

@@ -48,6 +48,6 @@ module.exports = {
         return await interaction.editReply({ content: `There are not enough boosts for this, max: \`${client.amount}\`` })
     }
 
-    await interaction.editReply({ content: `Sent \`${client.amount}x\` boosts to [${client.guild}](${client.invite})`, ephemeral: true })
+    await interaction.editReply({ content: `Sent \`${client.amount}x\` boosts to <[${client.guild}](${client.invite})>`, ephemeral: true })
   }
 }
