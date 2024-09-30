@@ -1,7 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
 
-const tokensData = require('../../tokens.json')
-
 const fs = require('fs')
 
 module.exports = {
@@ -22,24 +20,26 @@ module.exports = {
 
     let i = 0
 
+    const data = JSON.parse(fs.readFileSync('./tokens.json', "utf8"))
+
     if(token.includes(",")) {
         token = token.split(",")
 
         token.forEach((t) => {
-            tokensData.tokens.forEach((tk) => {
+            data.tokens.forEach((tk) => {
               if(tk === t) {
-                const index = tokensData.tokens.indexOf(t)
-                tokensData.tokens.splice(index, 1)
+                const index = data.tokens.indexOf(t)
+                data.tokens.splice(index, 1)
 
                 i = i + 1
               }
             })
         });
     } else {
-      tokensData.tokens.forEach((tk) => {
+      data.tokens.forEach((tk) => {
         if(tk === token) {
-          const index = tokensData.indexOf(token)
-          tokensData.tokens.splice(index, 1)
+          const index = data.tokens.indexOf(token)
+          data.tokens.splice(index, 1)
 
           i = i + 1
         }
@@ -50,7 +50,7 @@ module.exports = {
       return await interaction.reply({ content: `No tokens found with the given query...`, ephemeral: true })
     }
 
-    fs.writeFileSync("./tokens.json", JSON.stringify(tokensData, null, 2))
+    fs.writeFileSync("./tokens.json", JSON.stringify(data, null, 2))
 
     await interaction.reply({ content: `Removed \`${i}\` tokens from the stock.`, ephemeral: true })
   }
