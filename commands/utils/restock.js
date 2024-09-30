@@ -1,7 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
 
-const tokensData = require('../../tokens.json')
-
 const fs = require('fs')
 
 module.exports = {
@@ -22,19 +20,21 @@ module.exports = {
 
     let i = 0
 
+    const data = JSON.parse(fs.readFileSync('./tokens.json', "utf8"))
+
     if(token.includes(",")) {
         token = token.split(",")
 
         token.forEach((t) => {
-            tokensData.tokens.push(String(t))
+            data.tokens.push(String(t))
             i = i + 1
         });
     } else {
-        tokensData.tokens.push(String(token))
+        data.tokens.push(String(token))
         i = i + 1
     }
 
-    fs.writeFileSync("./tokens.json", JSON.stringify(tokensData, null, 2))
+    fs.writeFileSync("./tokens.json", JSON.stringify(data, null, 2))
 
     await interaction.reply({ content: `Added \`${i}\` tokens to the stock.`, ephemeral: true })
   }
