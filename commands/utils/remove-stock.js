@@ -8,8 +8,8 @@ module.exports = {
     .setDescription('Removes a token from the stock.')
     .addStringOption(option =>
         option.setName('token')
-            .setDescription('The boost token to be removed. (multiple tokens in this format -> token, token2 ...)')
-            .setRequired(true)
+          .setDescription('The boost token to be removed. (multiple tokens in this format -> token, token2 ...)')
+          .setRequired(true)
     ),
   async execute(interaction) {
     let token = interaction.options.getString('token')

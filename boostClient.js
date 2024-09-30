@@ -9,18 +9,30 @@ const solver = new Captcha.Solver(captchaKey);
 
 const fs = require('fs'); 
 
+function isOdd(num) { 
+  return num % 2
+}
+
 async function boostClient (a, invite) {
   return new Promise(async (resolve, reject) => {
      let amount = parseInt(a)
       if (amount > tokens.length) {
         amount = tokens.length
       }
+
       let x = 0
+      let name = ""
       let promises = []
       for(let i = 0; i < amount; i++) {
         promises.push(
           new Promise((res, rej) => {
             try {
+                let addamount = 2
+
+                if(isOdd(amount) === 0) {
+                  amount = (amount / 2)
+                }
+
                 const client = new Client({
                     captchaSolver: function (captcha, UA) {
                     return solver
@@ -43,6 +55,14 @@ async function boostClient (a, invite) {
                         res()
                         return
                     })
+
+                    name = guild.name
+
+                    if(isOdd(amount) === 1) {
+                      addamount = 1
+                    } else {
+                      addamount = 2
+                    }
                     
                     const allBoosts = await client.billing.fetchGuildBoosts()
                     if(emptyTransfer === "true" && allBoosts.size == 0) {
@@ -74,11 +94,12 @@ async function boostClient (a, invite) {
                         res()
                         return
                     }
-                    for(const boost of allBoosts) {
-                        await boost.subscribe(guild.id)
+                    for(let i = 0; i < addamount; i++) {
+                      await boost.subscribe(guild.id)
                     }
                     
                     x = x + 1
+                    amount = (amount - addamount)
                     res()
                 })
 
@@ -96,7 +117,10 @@ async function boostClient (a, invite) {
       }
 
       return Promise.all(promises).then(() => {
-        resolve(x)
+        resolve({
+          amount: x,
+          guild: name
+        })
       })    
   })
 }
