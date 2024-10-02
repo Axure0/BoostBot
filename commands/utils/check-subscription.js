@@ -46,14 +46,21 @@ module.exports = {
         }
 
         subscription.map((x) => {
-            const ts1 = x.current_period_start
+            let ts1 = x.current_period_start
                 .split("T")
+
+            const ts1s = ts1[0]
+                .replace("-", " ")
+
+            timestamp = new Date(`${ts1s} ${ts1[1]}`)
 
             const ts2 = x.current_period_end
                 .split("T")
 
-            timestamp = timestring(ts1[0])
-            timestamp2 = timestring(ts2[0])
+            const ts2s = ts2[0]
+                .replace("-", " ")
+            
+            timestamp2 = new Date(`${ts2s} ${ts2[1]}`)
         })
 
         return interaction.reply({ content: `Created at: <t:${timestamp}:F>\nEnds at: <t:${timestamp2}:F>\nBoosts: \`${boosts.size}\`\nPlans: \`${subscription.size}\``, ephemeral: true })
