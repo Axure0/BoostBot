@@ -44,6 +44,10 @@ module.exports = {
         return await interaction.editReply({ content: "There was an error whilst executing this command. Please make sure the invite is valid.", ephemeral: true })
     })
 
+    if(parseInt(client.amount) === 0) {
+        return interaction.editReply({ content: `Token has no boosts... cancelling operation.`, ephemeral: true })
+    }
+
     await interaction.editReply({ content: `Sent \`${client.amount}x\` boosts to [${client.guild}](<${client.invite}>)`, ephemeral: true })
   }
 }

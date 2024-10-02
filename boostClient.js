@@ -26,7 +26,7 @@ async function boostClient (a, invite, interaction) {
 
       for(let i = 0; i < amount; i++) {
         promises.push(
-          new Promise((res, rej) => {
+          new Promise(async (res, rej) => {
             try {
                 let addamount = 2
 
@@ -97,7 +97,7 @@ async function boostClient (a, invite, interaction) {
                     res()
                 })
 
-               client.login(tokens[i])
+               await client.login(tokens[i])
                     .catch((e) => {
                       console.log(e)
                    	  res()
