@@ -48,8 +48,12 @@ module.exports = {
         subscription.map((x) => {
             const ts1 = x.current_period_start
                 .split("T")
+
+            const ts2 = x.current_period_end
+                .split("T")
+
             timestamp = timestring(ts1[0])
-            timestamp2 = timestring(x.current_period_end)
+            timestamp2 = timestring(ts2[0])
         })
 
         return interaction.reply({ content: `Created at: <t:${timestamp}:F>\nEnds at: <t:${timestamp2}:F>\nBoosts: \`${boosts.size}\`\nPlans: \`${subscription.size}\``, ephemeral: true })
