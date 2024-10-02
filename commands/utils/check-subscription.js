@@ -5,6 +5,8 @@ const { captchaKey } = require('../../config.json')
 const Captcha = require('2captcha');
 const solver = new Captcha.Solver(captchaKey);
 
+const timestring = require("timestring")
+
 const { Client } = require('discord.js-selfbot-v13');
 
 module.exports = {
@@ -34,10 +36,21 @@ module.exports = {
 
     client.on('ready', async () => {
         const subscription = await client.billing.fetchCurrentSubscription()
+        const boosts = await client.billing.fetchGuildBoosts()
 
-        console.log(subscription)
+        let timestamp = Date.now()
+        let timestamp2 = Date.now()
 
-        return interaction.reply({ content: `Token has \`${subscription.size}\` boosts.`, ephemeral: true })
+        if(subscription.size === 0) {
+            return interaction.reply({ content: "No active subscription.", ephemeral: true })
+        }
+
+        subscription.map((x) => {
+            timestamp = timestring(x.current_period_start)
+            timestamp2 = timestring(x.current_period_end)
+        })
+
+        return interaction.reply({ content: `Created at: <t:${timestamp}:F>\nEnds at: <t:${timestamp2}:F>\nBoosts: \`${boosts.size}\`\nPlans: \`${subscription.size}\``, ephemeral: true })
     })
 
     await client.login(token)
