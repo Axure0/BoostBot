@@ -53,6 +53,7 @@ module.exports = {
                 .replace("-", " ")
 
             timestamp = new Date(`${ts1s} ${ts1[1]}`)
+            timestamp = timestamp.getTime()
 
             const ts2 = x.current_period_end
                 .split("T")
@@ -61,6 +62,7 @@ module.exports = {
                 .replace("-", " ")
             
             timestamp2 = new Date(`${ts2s} ${ts2[1]}`)
+            timestamp2 = timestamp2.getTime()
         })
 
         return interaction.reply({ content: `Created at: <t:${timestamp}:F>\nEnds at: <t:${timestamp2}:F>\nBoosts: \`${boosts.size}\`\nPlans: \`${subscription.size}\``, ephemeral: true })
