@@ -46,7 +46,9 @@ module.exports = {
         }
 
         subscription.map((x) => {
-            timestamp = timestring(x.current_period_start)
+            const ts1 = x.current_period_start
+                .split("T")
+            timestamp = timestring(ts1[0])
             timestamp2 = timestring(x.current_period_end)
         })
 
