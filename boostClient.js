@@ -8,14 +8,12 @@ const solver = new Captcha.Solver(captchaKey);
 
 const fs = require('fs'); 
 
-async function boostClient (a, invite) {
+async function boostClient (a, invite, interaction) {
   return new Promise(async (resolve, reject) => {
      let amount = parseInt(a)
       if (amount > tokens.length * 2) {
-        return res({
-          message: "not enough",
-          amount: tokens.length * 2
-        })
+        interaction.followUp({ content: `Not enough tokens... Current stock of boosts are: \`${tokens.length * 2}\``, ephemeral: true })
+        return res()
       }
 
       amount = amount / 2
@@ -70,23 +68,7 @@ async function boostClient (a, invite) {
                     
                     const allBoosts = await client.billing.fetchGuildBoosts()
                     if(allBoosts.size == 0) {
-                        console.log(`[${i + 1}/${amount}] ${client.user.tag} has no boosts. Removing token...`)
-
-                        if(!token) {
-                            res()
-                            return
-                        }
-                        
-                        let arr2 = data.empty
-                        arr2.push(token)
-                        data.empty = arr2
-                        
-                        let arr = data.tokens
-                        const index = arr.indexOf(token)
-                        arr.splice(index, 1)
-                        data.tokens = arr
-                        
-                        fs.writeFileSync('./tokens.json', JSON.stringify(data, null, 2));
+                        interaction.editReply({ content: `[${i + 1}/${amount}] ${client.user.tag} has no boosts.`, ephemeral: true })
                         res()
                         return
                     }
