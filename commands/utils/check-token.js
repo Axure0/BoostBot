@@ -1,5 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js')
 
+const { captchaKey } = require('../../config.json')
+
 const Captcha = require('2captcha');
 const solver = new Captcha.Solver(captchaKey);
 
