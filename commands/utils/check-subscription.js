@@ -9,8 +9,8 @@ const { Client } = require('discord.js-selfbot-v13');
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('check-token')
-    .setDescription("Checks a token's boosts.")
+    .setName('check-subscription')
+    .setDescription("Checks a token's subscription.")
     .addStringOption(option => 
         option.setName("token")
             .setDescription("The token to check.")
@@ -33,9 +33,11 @@ module.exports = {
     });
 
     client.on('ready', async () => {
-        const allBoosts = await client.billing.fetchGuildBoosts()
+        const subscription = await client.billing.fetchCurrentSubscription()
 
-        return interaction.reply({ content: `Token has \`${allBoosts.size}\` boosts.`, ephemeral: true })
+        console.log(subscription)
+
+        return interaction.reply({ content: `Token has \`${subscription.size}\` boosts.`, ephemeral: true })
     })
 
     await client.login(token)
