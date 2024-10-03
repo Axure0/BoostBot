@@ -61,7 +61,7 @@ module.exports = {
           let endst = Date.now()
 
           subscription.map((x) => {
-            const [y, m, d] = x.current_peroid_start.split("-")
+            const [y, m, d] = x.current_period_start.split("-")
             const ts1 = new Date(`${d} ${m} ${y}`)
 
             startedt = ts1.getTime()
