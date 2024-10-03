@@ -46,7 +46,7 @@ module.exports = {
         const embed = new EmbedBuilder()
         .setTitle(`${client.user.tag}`)
         .setDescription(`${client.user.fetch().bio}`)
-        .setColor(client.user.fetch().accentColor)
+        .setColor(client.user.fetch().accentColor ?? "Green")
         .setFields(
           { name: "2FA Enabled", value: `${client.user.mfaEnabled}`, inline: true },
           { name: "Verified", value: `${client.user.verified}`, inline: true },
