@@ -39,13 +39,19 @@ module.exports = {
         const premiumObj = {
           "0": "No Nitro",
           "1": "Nitro Classic",
-          "2": "Nitro",
+          "2": "Nitro Boost",
           "3": "Nitro Basic"
+        }
+
+        let bio = ""
+
+        if(client.user.fetch().bio) {
+          bio = client.user.fetch().bio
         }
         
         const embed = new EmbedBuilder()
         .setTitle(`${client.user.tag}`)
-        .setDescription(`${client.user.fetch().bio}`)
+        .setDescription(`${bio}`)
         .setColor(client.user.fetch().accentColor ?? "Green")
         .setFields(
           { name: "2FA Enabled", value: `${client.user.mfaEnabled}`, inline: true },
@@ -54,13 +60,14 @@ module.exports = {
           { name: "Boosts", value: `${boosts.size}`, inline: true },
           { name: "Nitro", value: `${premiumObj[String(client.user.premiumType)]}`, inline: true }
         )
-        .setThumbnail(client.user.avatarURL())
+        .setThumbnail(client.user.avatarURL() ?? "https://ia600305.us.archive.org/31/items/discordprofilepictures/discordblue.png")
 
         if(String(client.user.premiumType) !== "0") {
           let startedt = Date.now()
           let endst = Date.now()
 
           subscription.map((x) => {
+            console.log(x)
             const [y, m, d] = x.current_period_start.split("-")
             const ts1 = new Date(`${d} ${m} ${y}`)
 
