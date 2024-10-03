@@ -68,14 +68,14 @@ module.exports = {
 
           subscription.map((x) => {
             console.log(x)
-            const [y, m, d] = x.current_period_start.split("-")
+            const splitted1 = x.current_period_start.split("T")
+            const [y, m, d] = splitted1[0].split("-")
             const ts1 = new Date(`${d} ${m} ${y}`)
-
-            console.log(ts1)
 
             startedt = ts1.getTime()
 
-            const [y1, m1, d1] = x.current_period_end.split("-")
+            const splitted2 = x.current_period_end.split("T")
+            const [y1, m1, d1] = splitted2[0].split("-")
             const ts2 = new Date(`${d1} ${m1} ${y1}`)
 
             endst = ts2.getTime()
