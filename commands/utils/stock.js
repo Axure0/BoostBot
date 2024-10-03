@@ -2,11 +2,40 @@ const { SlashCommandBuilder } = require('discord.js')
 
 const { tokens } = require('../../tokens.json')
 
+const fs = require('fs');
+const path = require('path')
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('stock')
-    .setDescription('Checks the current stock of tokens.'),
+    .setDescription('Get the current stock of tokens.'),
   async execute(interaction) {
-    await interaction.reply({ content: `\`${tokens.length}\` tokens (\`${tokens.length * 2}\` boosts) in stock right now...`, ephemeral: true })
+    let filePath = ""
+    let promises = []
+
+    for (let i = 0; i < tokens.length; i++) {
+      promises.push(
+        new Promise((res, rej) => {
+          if(i === 0) {
+            let today = new Date().toLocaleDateString()
+            let time = new Date().toLocaleTimeString();
+    
+            filePath = path.join(__dirname, `${today}-${time}`)
+    
+            fs.writeFile(filePath, `${tokens[i]}`, function (err) {
+              if (err) console.log(err)
+            });
+          } else {
+            fs.appendFile(filePath, `${tokens[i]}`, function (err) {
+              if (err) console.log(err)
+            });
+          }
+        })
+      )
+    }
+
+    Promise.all(promises).then(async () => {
+      return await interaction.reply({ content: `\`${tokens.length}\` tokens (\`${tokens.length * 2}\` boosts) in stock right now...\n\n*TXT File with list of tokens has been added to the message*`, files: [filePath], ephemeral: true })
+    })
   }
 }
