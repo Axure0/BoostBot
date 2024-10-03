@@ -15,9 +15,15 @@ module.exports = {
         option.setName("token")
             .setDescription("The token to check.")
             .setRequired(true)
+    )
+    .addBooleanOption(option =>
+        option.setName("dm")
+            .setDescription("Sends the message to dms.")
+            .setRequired(true)
     ),
   async execute(interaction) {
     const token = interaction.options.getString("token")
+    const toDms = interaction.options.getBoolean("dm")
 
     const client = new Client({
         captchaSolver: function (captcha, UA) {
@@ -77,7 +83,15 @@ module.exports = {
           )
         }
 
-        return interaction.reply({ embeds: [embed], ephemeral: true })
+        async function dm() {
+          await interaction.reply({ content: "Sent to dms.", ephemeral: true })
+          return await interaction.user.send({ embeds: [embed] })
+        }
+
+        return toDms 
+          ? await dm()
+          : interaction.reply({ embeds: [embed], ephemeral: true })
+
     })
 
     await client.login(token)
