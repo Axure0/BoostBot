@@ -43,7 +43,7 @@ module.exports = {
           "3": "Nitro Basic"
         }
 
-        let bio = "No bio"
+        let bio = "No Description"
 
         if(client.user.fetch().bio) {
           bio = client.user.fetch().bio
@@ -56,7 +56,7 @@ module.exports = {
         .setFields(
           { name: "2FA Enabled", value: `${client.user.mfaEnabled}`, inline: true },
           { name: "Verified", value: `${client.user.verified}`, inline: true },
-          { name: "Phone Number", value: `${client.user.phone}`, inline: true },
+          { name: "Phone Number", value: `${client.user.phone ?? "Not Set"}`, inline: true },
           { name: "Boosts", value: `${boosts.size}`, inline: true },
           { name: "Nitro", value: `${premiumObj[String(client.user.premiumType)]}`, inline: true }
         )
@@ -70,6 +70,8 @@ module.exports = {
             console.log(x)
             const [y, m, d] = x.current_period_start.split("-")
             const ts1 = new Date(`${d} ${m} ${y}`)
+
+            console.log(ts1)
 
             startedt = ts1.getTime()
 
