@@ -51,10 +51,10 @@ module.exports = {
         
         const embed = new EmbedBuilder()
         .setTitle(`${client.user.tag}`)
-        .setURL(`https://discordapp.com/users/${client.user.id}/`)
         .setDescription(`${bio}`)
         .setColor(client.user.fetch().accentColor ?? "Green")
         .setFields(
+          { name: "User ID", value: `${client.user.id}`, inline: true },
           { name: "2FA Enabled", value: `${client.user.mfaEnabled}`, inline: true },
           { name: "Verified", value: `${client.user.verified}`, inline: true },
           { name: "Phone Number", value: `${client.user.phone ?? "Not Set"}`, inline: true },
