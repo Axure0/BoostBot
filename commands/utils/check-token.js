@@ -43,7 +43,7 @@ module.exports = {
           "3": "Nitro Basic"
         }
 
-        let bio = ""
+        let bio = "No bio"
 
         if(client.user.fetch().bio) {
           bio = client.user.fetch().bio
