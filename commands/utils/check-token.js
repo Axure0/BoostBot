@@ -43,7 +43,7 @@ module.exports = {
           "3": "Nitro Basic"
         }
 
-        let bio = "No Description"
+        let bio = "No Description."
 
         if(client.user.fetch().bio) {
           bio = client.user.fetch().bio
@@ -51,6 +51,7 @@ module.exports = {
         
         const embed = new EmbedBuilder()
         .setTitle(`${client.user.tag}`)
+        .setURL(`https://discordapp.com/users/${client.user.id}/`)
         .setDescription(`${bio}`)
         .setColor(client.user.fetch().accentColor ?? "Green")
         .setFields(
@@ -67,18 +68,8 @@ module.exports = {
           let endst = Date.now()
 
           subscription.map((x) => {
-            console.log(x)
-            const splitted1 = x.current_period_start.split("T")
-            const [y, m, d] = splitted1[0].split("-")
-            const ts1 = new Date(`${d} ${m} ${y}`)
-
-            startedt = ts1.getTime()
-
-            const splitted2 = x.current_period_end.split("T")
-            const [y1, m1, d1] = splitted2[0].split("-")
-            const ts2 = new Date(`${d1} ${m1} ${y1}`)
-
-            endst = ts2.getTime()
+            startedt = Math.floor(new Date(x.current_period_start).getTime() / 1000)
+            endst = Math.floor(new Date(x.current_period_end).getTime() / 1000)
           })
           embed.addFields(
             { name: "Nitro Started", value: `<t:${startedt}>`, inline: true },
