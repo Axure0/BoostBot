@@ -56,7 +56,7 @@ module.exports = {
         )
         .setThumbnail(client.user.avatarURL())
 
-        if(bool === true) {
+        if(String(client.user.premiumType) !== "0") {
           let startedt = Date.now()
           let endst = Date.now()
 
