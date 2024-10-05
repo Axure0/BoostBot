@@ -18,9 +18,9 @@ module.exports = {
         new Promise((res, rej) => {
           if(i === 0) {
             let today = new Date().toLocaleDateString()
-            let time = new Date().toLocaleTimeString();
+            let ran = Math.floor(100000000 + Math.random() * 900000000);
     
-            filePath = path.join(__dirname, `${today}-${time}`)
+            filePath = path.join(__dirname, `${today}-${ran}`)
     
             fs.writeFile(filePath, `${tokens[i]}`, function (err) {
               if (err) console.log(err)
