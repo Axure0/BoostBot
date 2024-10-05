@@ -24,10 +24,12 @@ module.exports = {
     
             fs.writeFile(filePath, `${tokens[i]}`, function (err) {
               if (err) console.log(err)
+              res()
             });
           } else {
             fs.appendFile(filePath, `${tokens[i]}`, function (err) {
               if (err) console.log(err)
+              res()
             });
           }
         })
