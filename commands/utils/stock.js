@@ -18,6 +18,7 @@ module.exports = {
         new Promise((res, rej) => {
           if(i === 0) {
             let today = new Date().toLocaleDateString()
+            today = today.replace("/", "-")
             let ran = Math.floor(100000000 + Math.random() * 900000000);
     
             filePath = path.join(__dirname, `${today}-${ran}.txt`)
