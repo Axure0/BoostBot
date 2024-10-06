@@ -17,7 +17,7 @@ module.exports = {
     const data = await Schema.findOne({ guildId: interaction.guild.id })
     const tokens = data.tokens
 
-    if(tokens == []) {
+    if(tokens.length == 0) {
       return interaction.reply({ content: "There are no tokens.", ephemeral: true })
     }
 
