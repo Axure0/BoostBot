@@ -38,7 +38,12 @@ module.exports = {
     }
 
     Promise.all(promises).then(async () => {
-      return await interaction.reply({ content: `\`${tokens.length}\` tokens (\`${tokens.length * 2}\` boosts) in stock right now...\n\n*TXT File with list of tokens has been added to the message*`, files: [filePath], ephemeral: true })
+      await interaction.reply({ content: `\`${tokens.length}\` tokens (\`${tokens.length * 2}\` boosts) in stock right now...\n\n-# TXT File with list of tokens has been added to the message`, files: [filePath], ephemeral: true })
+    
+      fs.unlink(filePath, function(err) {
+        if(err) console.log(err)
+        return
+      })
     })
   }
 }
