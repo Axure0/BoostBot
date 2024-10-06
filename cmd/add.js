@@ -8,6 +8,14 @@ module.exports = {
         return message.reply("Please provide a Guild ID. -# Command Usage: .add <guildId> <time (in days i.e 30) || unlimited> <ownerId>")
     }
 
+    if(!args[2]) {
+        return message.reply("Please provide a time. -# Command Usage: .add <guildId> <time (in days i.e 30) || unlimited> <ownerId>")
+    }
+
+    if(!args[3]) {
+        return message.reply("Please provide a owner id. -# Command Usage: .add <guildId> <time (in days i.e 30) || unlimited> <ownerId>")
+    }
+
     const data = await Schema.findOne({ guildId: message.guild.id })
 
     if(data) {
