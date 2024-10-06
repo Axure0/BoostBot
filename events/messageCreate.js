@@ -8,9 +8,13 @@ module.exports = {
     async execute(message) {
         const spliced = message.content.split(prefix)
         const prefix1 = message.content.charAt(0)
+        
+        console.log("a")
 
         if(message.author.id !== ownerId) return
         if(prefix1 !== prefix) return
+        
+        console.log("b")
 
         let args = String(spliced[1]).split(" ") || [spliced[1]]
 
@@ -18,6 +22,7 @@ module.exports = {
 
         if(args[0] == "add") {
             try {
+                console.log("c")
                 const command = require('../cmd/add')
                 await command.execute(message, args, client)
             } catch (e) {
