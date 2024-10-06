@@ -1,17 +1,21 @@
 const { SlashCommandBuilder } = require('discord.js')
 
-const { tokens } = require('../../tokens.json')
+const Schema = require('../../Schemas/tokensSchema')
 
 const fs = require('fs');
 const path = require('path')
 
 module.exports = {
+  permitted: true,
   data: new SlashCommandBuilder()
-    .setName('stock')
+    .setName('tokens')
     .setDescription('Get the current stock of tokens.'),
   async execute(interaction) {
     let filePath = ""
     let promises = []
+
+    const data = await Schema.findOne({ guildId: interaction.guild.id })
+    const tokens = data.tokens
 
     for (let i = 0; i < tokens.length; i++) {
       promises.push(
@@ -38,7 +42,7 @@ module.exports = {
     }
 
     Promise.all(promises).then(async () => {
-      await interaction.reply({ content: `\`${tokens.length}\` tokens (\`${tokens.length * 2}\` boosts) in stock right now...\n\n-# TXT File with list of tokens has been added to the message`, files: [filePath], ephemeral: true })
+      await interaction.reply({ content: `\`${tokens.length}\` tokens (\`${tokens.length * 2}\` boosts) in stock right now...\n\n-# TXT File with a list of tokens has been added to the message.`, files: [filePath], ephemeral: true })
     
       fs.unlink(filePath, function(err) {
         if(err) console.log(err)

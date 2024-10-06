@@ -1,8 +1,11 @@
 const { SlashCommandBuilder } = require('discord.js')
 
+const Schema = require('../../Schemas/tokensSchema')
+
 const fs = require('fs')
 
 module.exports = {
+  permitted: true,
   data: new SlashCommandBuilder()
     .setName('remove-stock')
     .setDescription('Removes a token from the stock.')
@@ -20,7 +23,7 @@ module.exports = {
 
     let i = 0
 
-    const data = JSON.parse(fs.readFileSync('./tokens.json', "utf8"))
+    const data = await Schema.findOne({ guild: interaction.guild.id })
 
     if(token.includes(",")) {
         token = token.split(",")
@@ -50,7 +53,7 @@ module.exports = {
       return await interaction.reply({ content: `No tokens found with the given query...`, ephemeral: true })
     }
 
-    fs.writeFileSync("./tokens.json", JSON.stringify(data, null, 2))
+    await Schema.findOneAndUpdate({ guildId: interaction.guild.id }, { tokens: data.tokens })
 
     await interaction.reply({ content: `Removed \`${i}\` tokens from the stock.`, ephemeral: true })
   }

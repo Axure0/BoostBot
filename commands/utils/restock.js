@@ -1,8 +1,9 @@
 const { SlashCommandBuilder } = require('discord.js')
 
-const fs = require('fs')
+const Schema = require('../../Schemas/tokensSchema')
 
 module.exports = {
+  permitted: true,
   data: new SlashCommandBuilder()
     .setName('restock')
     .setDescription('Adds a token to the stock.')
@@ -13,14 +14,13 @@ module.exports = {
     ),
   async execute(interaction) {
     let token = interaction.options.getString('token')
+    const data = await Schema.findOne({ guildId: interaction.guild.id })
 
     if(token.includes(" ")) {
         token = token.replace(" ", "")
     }
 
     let i = 0
-
-    const data = JSON.parse(fs.readFileSync('./tokens.json', "utf8"))
 
     if(token.includes(",")) {
         token = token.split(",")
@@ -34,7 +34,7 @@ module.exports = {
         i = i + 1
     }
 
-    fs.writeFileSync("./tokens.json", JSON.stringify(data, null, 2))
+    await Schema.findOneAndUpdate({ guildId: interaction.guild.id }, { tokens: data.tokens })
 
     await interaction.reply({ content: `Added \`${i}\` tokens to the stock.`, ephemeral: true })
   }

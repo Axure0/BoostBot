@@ -1,12 +1,11 @@
 const { Client } = require('discord.js-selfbot-v13');
 
-const { tokens } = require('./tokens.json')
 const { captchaKey } = require('./config.json')
 
 const Captcha = require('2captcha');
 const solver = new Captcha.Solver(captchaKey);
 
-const fs = require('fs'); 
+const Schema = require('../../Schemas/tokensSchema')
 
 async function boostClient (a, invite, interaction) {
   return new Promise(async (resolve, reject) => {
@@ -58,11 +57,11 @@ async function boostClient (a, invite, interaction) {
                     const splitted = invite.split(".gg/")
                     inv = `https://discord.gg/${splitted[1]}`
 
-                    const data = JSON.parse(fs.readFileSync('./tokens.json', "utf8"))
+                    const data = await Schema.findOne({ guildId: interaction.guild.id })
 
                     let token
                         
-                    if(tokens.filter((t) => t === client.token)) {
+                    if(data.tokens.filter((t) => t === client.token)) {
                       token = client.token
                     }
                     
@@ -83,14 +82,12 @@ async function boostClient (a, invite, interaction) {
 
                     let arr2 = data.used
                     arr2.push(token)
-                    data.used = arr2
                         
                     let arr = data.tokens
                     const index = arr.indexOf(token)
                     arr.splice(index, 1)
-                    data.tokens = arr
                         
-                    fs.writeFileSync('./tokens.json', JSON.stringify(data, null, 2));
+                    await Schema.findOneAndUpdate({ guildId: interaction.guild.id }, { tokens: data.tokens, used: data.used })
                     
                     x = x + 1
                     amount = (amount - addamount)

@@ -1,13 +1,15 @@
 const { Events } = require('discord.js');
 
-const { whitelisted } = require('../config.json')
+const Schema = require('../Schemas/subscriptionSchema')
 
 module.exports = {
 	name: Events.InteractionCreate,
 	async execute(interaction) {
 		if (!interaction.isChatInputCommand()) return;
 
-		whitelisted.forEach((w) => {
+		const data = await Schema.findOne({ guildId: interaction.guild.id })
+
+		data.whitelisted.forEach((w) => {
 			if(interaction.user.id !== w) {
 				return interaction.reply({ content: "You do not have permission to use this command!", ephemeral: true })
 			}
@@ -20,14 +22,42 @@ module.exports = {
 			return;
 		}
 
-		try {
-			await command.execute(interaction);
-		} catch (error) {
-			console.error(error);
-			if (interaction.replied || interaction.deferred) {
-				await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true });
-			} else {
-				await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+		if(command.permitted && command.permitted === true) {
+			try {
+				await command.execute(interaction);
+			} catch (error) {
+				console.error(error);
+				if (interaction.replied || interaction.deferred) {
+					await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true });
+				} else {
+					await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+				}
+			}
+		} else {
+			if(!data) {
+				return interaction.reply({ content: "Your guild doesn't have a subscription to use this bot!", ephemeral: true })
+			}
+	
+			if(data && data.unlimited == "false") {
+				const today = new Date().getTime()
+				const dateFrom = Math.floor((today - data.ms) / 1000 / 60 / 60 / 24)
+	
+				if(dateFrom >= data.period) {
+					interaction.reply({ content: "Your guild subscription has expired.", ephemeral: true })
+	
+					return await Schema.deleteOne({ guildId: interaction.guild.id })
+				}
+			}
+	
+			try {
+				await command.execute(interaction);
+			} catch (error) {
+				console.error(error);
+				if (interaction.replied || interaction.deferred) {
+					await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true });
+				} else {
+					await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+				}
 			}
 		}
 	},
