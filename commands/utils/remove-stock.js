@@ -20,7 +20,7 @@ module.exports = {
 
     let i = 0
 
-    const data = await Schema.findOne({ guild: interaction.guild.id })
+    const data = await Schema.findOne({ guildId: interaction.guild.id })
 
     if(token.includes(",")) {
         token = token.split(",")
