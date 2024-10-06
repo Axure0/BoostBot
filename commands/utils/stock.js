@@ -20,7 +20,8 @@ module.exports = {
             let today = new Date().toLocaleDateString()
             let ran = Math.floor(100000000 + Math.random() * 900000000);
     
-            filePath = path.join(process.cwd(), `${today}-${ran}.txt`)
+            filePath = path.join(__dirname, `${today}-${ran}.txt`)
+            conso
     
             fs.writeFile(filePath, `${tokens[i]}`, function (err) {
               if (err) console.log(err)
