@@ -1,4 +1,4 @@
-const interactionCreate = require('../events/interactionCreate')
+const Schema2 = require('../Schemas/tokensSchema')
 const Schema = require('../Schemas/subscriptionSchema')
 
 module.exports = {
@@ -46,6 +46,14 @@ module.exports = {
         await newData.save()
     }
 
-    return message.reply(`Added \`${args[2]}\` to the guild's subscription!`)
+    const newData2 = new Schema2({
+        guildId: args[1],
+        tokens: [],
+        used: []
+    })
+
+    await newData2.save()
+
+    return message.reply(`Added \`${args[2]}d\` to the guild's subscription!`)
   }
 }
