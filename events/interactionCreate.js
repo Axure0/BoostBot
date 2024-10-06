@@ -24,7 +24,7 @@ module.exports = {
 			const today = new Date().getTime()
 			const dateFrom = Math.floor((today - data.ms) / 1000 / 60 / 60 / 24)
 
-			if(dateFrom >= data.period) {
+			if(String(dateFrom) >= data.period) {
 				interaction.reply({ content: "Your guild subscription has expired.", ephemeral: true })
 
 				return await Schema.deleteOne({ guildId: interaction.guild.id })
