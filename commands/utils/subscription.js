@@ -15,7 +15,7 @@ module.exports = {
         if(data.unlimited == "true") {
             interaction.reply({ content: `Your guild has an \`unlimited\` subscription.`, ephemeral: true })
         } else {
-            interaction.reply({ content: `Your guild has \`${dateFrom}\` days left on the subscription.`, ephemeral: true })
+            interaction.reply({ content: `Your guild has \`${parseInt(data.period) - dateFrom}\` days left on the subscription.`, ephemeral: true })
         }
     },
 };
