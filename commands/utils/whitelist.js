@@ -4,8 +4,8 @@ const Schema = require('../../Schemas/subscriptionSchema')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('subscription')
-        .setDescription('Checks your subscription.')
+        .setName('whitelist')
+        .setDescription('Whitelist a user to use this bot.')
         .addUserOption(option => 
             option.setName("user")
                 .setDescription("The user to whitelist.")
