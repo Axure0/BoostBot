@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js')
 const { DiscordInviteLinkRegex } = require("@sapphire/discord.js-utilities")
 
-const { boostClient } = require('../../boostClient')
+const boostClient = require('../../boostClient')
 
 function isOdd(num) {
     return num % 2

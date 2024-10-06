@@ -2,8 +2,6 @@ const { SlashCommandBuilder } = require('discord.js')
 
 const Schema = require('../../Schemas/tokensSchema')
 
-const fs = require('fs')
-
 module.exports = {
   permitted: true,
   data: new SlashCommandBuilder()
