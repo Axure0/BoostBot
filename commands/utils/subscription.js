@@ -10,7 +10,7 @@ module.exports = {
         const data = await Schema.findOne({ guildId: interaction.guild.id })
 
         const today = new Date().getTime()
-		const dateFrom = Math.floor((today - data.ms) / 1000 / 60 / 60 / 24)
+		const dateFrom = Math.floor((today - parseInt(data.ms)) / 1000 / 60 / 60 / 24)
 
         if(data.unlimited == "true") {
             interaction.reply({ content: `Your guild has an \`unlimited\` subscription.`, ephemeral: true })
