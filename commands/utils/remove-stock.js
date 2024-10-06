@@ -3,7 +3,6 @@ const { SlashCommandBuilder } = require('discord.js')
 const Schema = require('../../Schemas/tokensSchema')
 
 module.exports = {
-  permitted: true,
   data: new SlashCommandBuilder()
     .setName('remove-stock')
     .setDescription('Removes a token from the stock.')
