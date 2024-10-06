@@ -6,11 +6,11 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('subscription')
         .setDescription('Checks your subscription.')
-        .addUserOption(option => {
+        .addUserOption(option => 
             option.setName("user")
                 .setDescription("The user to whitelist.")
                 .setRequired(true)
-        }),
+        ),
     async execute (interaction) {
         const data = await Schema.findOne({ guildId: interaction.guild.id })
         let array = data.whitelisted
