@@ -24,6 +24,14 @@ module.exports = {
                 console.log(e)
                 message.reply("There was an error whilst executing this command!")
             }
+        } else if (args[0] == "keys") {
+            try {
+                const command = require('../cmd/keys')
+                await command.execute(message, args, client)
+            } catch (e) {
+                console.log(e)
+                message.reply("There was an error whilst executing this command!")
+            }
         }
     }
 }
