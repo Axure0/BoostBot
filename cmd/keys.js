@@ -2,7 +2,7 @@ const Schema = require('../Schemas/keysSchema')
 
 module.exports = {
     name: "keys",
-    async exectute(message, args, client) {
+    async execute(message, args, client) {
         const data = await Schema.find({})
         
         let msg = []
