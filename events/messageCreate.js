@@ -16,9 +16,9 @@ module.exports = {
 
         const client = message.client
 
-        if(args[0] == "add") {
+        if(args[0] == "set-key") {
             try {
-                const command = require('../cmd/add')
+                const command = require('../cmd/set-key')
                 await command.execute(message, args, client)
             } catch (e) {
                 console.log(e)

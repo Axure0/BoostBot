@@ -6,7 +6,6 @@ const fs = require('fs');
 const path = require('path')
 
 module.exports = {
-  permitted: true,
   data: new SlashCommandBuilder()
     .setName('tokens')
     .setDescription('Get the current stock of tokens.'),
