@@ -29,18 +29,12 @@ module.exports = {
             const f = require(fPath)
 
             if("name" in f) {
-                commands.push(
-                    {
-                        file: `${file}`,
-                        cmd: `${f.name}`
-                    }
-                )
+                commands.push({ file: `${file}`, cmd: `${f.name}` })
             }
         }
 
         if(commands.some((e) => e.cmd == args[0]) === true) {
             let x = []
-
             commands.forEach((y) => {
                 if(y.cmd == args[0]) {
                     x = y
@@ -48,7 +42,6 @@ module.exports = {
             })
 
             if(x.length === 0) return
-
             try {
                 const command = require(`../cmd/${x.file}`)
                 await command.execute(message, args, client)
