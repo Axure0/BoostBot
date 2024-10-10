@@ -28,6 +28,8 @@ module.exports = {
             const fPath = path.join(folderPath, file);
             const f = require(fPath)
 
+            if("disabled" in f && f.disabled === true) continue;
+
             if("name" in f) {
                 commands.push({ file: `${file}`, cmd: `${f.name}` })
             }
