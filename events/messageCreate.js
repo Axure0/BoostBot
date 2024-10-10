@@ -2,6 +2,9 @@ const { Events } = require('discord.js')
 
 const { prefix, ownerId } = require('../config.json')
 
+const fs = require('fs')
+const path = require('path')
+
 module.exports = {
     name: Events.MessageCreate,
     once: false,
@@ -16,17 +19,20 @@ module.exports = {
 
         const client = message.client
 
-        if(args[0] == "set-key") {
-            try {
-                const command = require('../cmd/set-key')
-                await command.execute(message, args, client)
-            } catch (e) {
-                console.log(e)
-                message.reply("There was an error whilst executing this command!")
+        const commands = []
+
+        const folderPath = path.join(__dirname, "..", 'cmd');
+        const commandFolder = fs.readdirSync(folderPath).filter(file => file.endsWith('.js'));
+
+        for(const file of commandFolder) {
+            if("name" in file) {
+                commands.push(String(file.name))
             }
-        } else if (args[0] == "keys") {
+        }
+
+        if(commands.some((e) => e === args[0]) === true) {
             try {
-                const command = require('../cmd/keys')
+                const command = require(`../cmd/${args[0]}`)
                 await command.execute(message, args, client)
             } catch (e) {
                 console.log(e)
