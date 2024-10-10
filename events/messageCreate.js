@@ -25,7 +25,10 @@ module.exports = {
         const commandFolder = fs.readdirSync(folderPath).filter(file => file.endsWith('.js'));
 
         for(const file of commandFolder) {
-            if("name" in file) {
+            const fPath = path.join(foldersPath, file);
+            const f = require(fPath)
+            
+            if("name" in f) {
                 commands.push(String(file.name))
             }
         }
