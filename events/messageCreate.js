@@ -29,13 +29,28 @@ module.exports = {
             const f = require(fPath)
 
             if("name" in f) {
-                commands.push(String(file.name))
+                commands.push(
+                    {
+                        file: `${file}`,
+                        cmd: `${f.name}`
+                    }
+                )
             }
         }
 
-        if(commands.some((e) => e === args[0]) === true) {
+        if(commands.some((e) => e.cmd == args[0]) === true) {
+            let x = []
+
+            commands.forEach((y) => {
+                if(y.cmd == args[0]) {
+                    x = y
+                }
+            })
+
+            if(x.length === 0) return
+
             try {
-                const command = require(`../cmd/${args[0]}`)
+                const command = require(`../cmd/${x.file}`)
                 await command.execute(message, args, client)
             } catch (e) {
                 console.log(e)
