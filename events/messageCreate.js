@@ -19,38 +19,18 @@ module.exports = {
 
         const client = message.client
 
-        const commands = []
+        const command = client.mcommands.get(args[0]);
+        if (!command) return
 
-        const folderPath = path.join(__dirname, "..", 'cmd');
-        const commandFolder = fs.readdirSync(folderPath).filter(file => file.endsWith('.js'));
-
-        for(const file of commandFolder) {
-            const fPath = path.join(folderPath, file);
-            const f = require(fPath)
-
-            if("disabled" in f && f.disabled === true) continue;
-
-            if("name" in f) {
-                commands.push({ file: `${file}`, cmd: `${f.name}` })
-            }
-        }
-
-        if(commands.some((e) => e.cmd == args[0]) === true) {
-            let x = []
-            commands.forEach((y) => {
-                if(y.cmd == args[0]) {
-                    x = y
-                }
-            })
-
-            if(x.length === 0) return
-            try {
-                const command = require(`../cmd/${x.file}`)
-                await command.execute(message, args, client)
-            } catch (e) {
-                console.log(e)
+        try {
+			await command.execute(message, args, client);
+		} catch (error) {
+			console.log(error);
+			if (interaction.replied || interaction.deferred) {
                 message.reply("There was an error whilst executing this command!")
-            }
-        }
+			} else {
+                message.reply("There was an error whilst executing this command!")
+			}
+		}
     }
 }

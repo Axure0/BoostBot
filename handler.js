@@ -20,6 +20,22 @@ module.exports = (client) => {
         }
     }
 
+    const mPath = path.join(__dirname, "..", 'cmd');
+    const mFolder = fs.readdirSync(mPath).filter(file => file.endsWith('.js'));
+
+    for(const mfile of mFolder) {
+        const fPath = path.join(mPath, mfile);
+        const f = require(fPath)
+
+        if("disabled" in f && f.disabled === true) continue;
+
+        if("name" in f && "execute" in f) {
+            client.mcommands.set(f.name, f);
+        } else {
+            console.log(`[WARNING] The command at ${fPath} is missing a required "name" or "execute" property.`);
+        }
+    }
+
     const eventsPath = path.join(__dirname, 'events');
     const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
 
