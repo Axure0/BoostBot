@@ -20,7 +20,7 @@ module.exports = (client) => {
         }
     }
 
-    const mPath = path.join(__dirname, "..", 'cmd');
+    const mPath = path.join(__dirname, 'cmd');
     const mFolder = fs.readdirSync(mPath).filter(file => file.endsWith('.js'));
 
     for(const mfile of mFolder) {
