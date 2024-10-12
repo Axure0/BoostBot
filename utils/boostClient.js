@@ -1,11 +1,11 @@
 const { Client } = require('discord.js-selfbot-v13');
 
-const { captchaKey } = require('./config.json')
+const { captchaKey } = require('../config.json')
 
 const Captcha = require('2captcha');
 const solver = new Captcha.Solver(captchaKey);
 
-const Schema = require('./Schemas/tokensSchema')
+const Schema = require('../Schemas/tokensSchema')
 
 async function boostClient (a, invite, interaction) {
   return new Promise(async (resolve, reject) => {

@@ -1,12 +1,12 @@
 module.exports = () => {
     const { REST, Routes } = require('discord.js');
-    const { clientId, token } = require('./config.json');
+    const { clientId, token } = require('../config.json');
     const fs = require('fs');
     const path = require('path');
 
     const commands = [];
 
-    const foldersPath = path.join(__dirname, 'commands');
+    const foldersPath = path.join(__dirname, "..", 'commands');
     const commandFolders = fs.readdirSync(foldersPath);
 
     for (const folder of commandFolders) {
@@ -28,14 +28,12 @@ module.exports = () => {
 
     (async () => {
         try {
-            console.log(`Started refreshing ${commands.length} application (/) commands.`);
-
-            const data = await rest.put(
+            await rest.put(
                 Routes.applicationCommands(clientId),
                 { body: commands },
             );
 
-            console.log(`Successfully reloaded ${data.length} application (/) commands.`);
+            require('../utils/console')()
         } catch (error) {
             console.error(error);
         }

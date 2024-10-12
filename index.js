@@ -12,7 +12,7 @@ const client = new Client({ intents: [
 client.commands = new Collection()
 client.mcommands = new Collection()
 
-require('./deployCommands')()
-require('./handler')(client)
+require('./handler/deployCommands')()
+require('./handler/handler')(client)
 
 client.login(token)
