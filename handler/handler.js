@@ -1,6 +1,15 @@
 const fs = require('fs')
 const path = require('path')
 
+let table = new AsciiTable3('Slash Commands')
+.setHeading('Command', 'Loaded')
+
+let table3 = new AsciiTable3('Message Commands')
+.setHeading('Command', 'Loaded')
+
+let table2 = new AsciiTable3('Events')
+.setHeading('Event', 'Loaded')
+
 module.exports = (client) => {
     const foldersPath = path.join(__dirname, "..", 'commands');
     const commandFolders = fs.readdirSync(foldersPath);
@@ -15,8 +24,16 @@ module.exports = (client) => {
                 
                 if ('data' in command && 'execute' in command) {
                     client.commands.set(command.data.name, command);
+
+                    table.addRowMatrix([
+                        [file.replace(".js", ""), '✅']
+                    ])
                 } else {
                     console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+                
+                    table.addRowMatrix([
+                        [file.replace(".js", ""), '❌']
+                    ])
                 }
             }
         }
@@ -32,8 +49,16 @@ module.exports = (client) => {
     
             if("name" in f && "execute" in f) {
                 client.mcommands.set(f.name, f);
+
+                table3.addRowMatrix([
+                    [file.replace(".js", ""), '✅']
+                ])
             } else {
                 console.log(`[WARNING] The command at ${fPath} is missing a required "name" or "execute" property.`);
+            
+                table3.addRowMatrix([
+                    [file.replace(".js", ""), '❌']
+                ])
             }
         }
     
@@ -48,12 +73,16 @@ module.exports = (client) => {
             } else {
                 client.on(event.name, (...args) => event.execute(...args));
             }
+
+            table2.addRowMatrix([
+                [file.replace(".js", ""), '✅']
+            ])
         }
 
         res()
     })
 
     promise.then(() => { 
-        require('../utils/console')() 
+        require('../utils/console')([table, table2, table3]) 
     })
 }

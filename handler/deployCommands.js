@@ -1,9 +1,14 @@
-module.exports = () => {
-    const { REST, Routes } = require('discord.js');
-    const { clientId, token } = require('../config.json');
-    const fs = require('fs');
-    const path = require('path');
+const { AsciiTable3 } = require('ascii-table3')
 
+const { REST, Routes } = require('discord.js');
+const { clientId, token } = require('../config.json');
+const fs = require('fs');
+const path = require('path');
+
+let table = new AsciiTable3('Deployed')
+.setHeading('Status')
+
+module.exports = () => {
     const commands = [];
 
     const foldersPath = path.join(__dirname, "..", 'commands');
@@ -33,9 +38,19 @@ module.exports = () => {
                 { body: commands },
             );
 
-            require('../utils/console')()
+            table.addRowMatrix([
+                ['✅']
+            ]);
+
+            require('../utils/console')(table)
         } catch (error) {
-            console.error(error);
+            console.log(error);
+
+            table.addRowMatrix([
+                ['❌']
+            ]);
+
+            require('../utils/console')(table)
         }
     })();
 }
