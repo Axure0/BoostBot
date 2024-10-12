@@ -53,13 +53,13 @@ module.exports = (client) => {
                 client.mcommands.set(f.name, f);
 
                 table3.addRowMatrix([
-                    [file.replace(".js", ""), '✅']
+                    [mfile.replace(".js", ""), '✅']
                 ])
             } else {
                 console.log(`[WARNING] The command at ${fPath} is missing a required "name" or "execute" property.`);
             
                 table3.addRowMatrix([
-                    [file.replace(".js", ""), '❌']
+                    [mfile.replace(".js", ""), '❌']
                 ])
             }
         }
