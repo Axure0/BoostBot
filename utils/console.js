@@ -1,6 +1,21 @@
 let tables = []
 let i = 0;
 
+function moveElm(arr, elm) {
+    let i = arr.findIndex((x) => x?.getTitle() == elm)
+      
+    let oldArray = arr
+    oldArray.splice(i, 1)
+    
+    let newArray = [arr[i]]
+  
+    for (const e of arr) {
+      newArray.push(e)
+    }  
+  
+    return newArray
+}
+
 module.exports = (table) => {
   i++;
 
@@ -13,7 +28,9 @@ module.exports = (table) => {
   }
   
   if(i >= 3) {
-    for(const t of tables) {
+    let newTables = moveElm(tables, "Deployed")
+    
+    for(const t of newTables) {
         console.log(t.toString())
     }
   }
