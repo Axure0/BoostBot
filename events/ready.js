@@ -9,32 +9,38 @@ module.exports = {
 	name: Events.ClientReady,
 	once: true,
 	async execute(client) {
-		let table = new AsciiTable3('Client')
-		.setHeading('Event', 'Status')
+		const promise = new Promise(async(res, rej) => {
+			let table = new AsciiTable3('Client')
+			.setHeading('Event', 'Status')
 
-		if(client.isReady()) {
-			table.addRowMatrix([
-				['Ready', '✅']
-			]);
-		} else {
-			table.addRowMatrix([
-				['Ready', '❌']
-			]);
-		}
+			if(client.isReady()) {
+				table.addRowMatrix([
+					['Ready', '✅']
+				]);
+			} else {
+				table.addRowMatrix([
+					['Ready', '❌']
+				]);
+			}
 
-		mongoose.connect(mongoURI).then(() => {
-			table.addRowMatrix([
-				['MongoDB', '✅']
-			]);
+			mongoose.connect(mongoURI).then(() => {
+				table.addRowMatrix([
+					['MongoDB', '✅']
+				]);
+			})
+			.catch((e) => {
+				console.log(e)
+
+				table.addRowMatrix([
+					['MongoDB', '❌']
+				]);
+			})
+
+			res()
 		})
-		.catch((e) => {
-			console.log(e)
 
-			table.addRowMatrix([
-				['MongoDB', '❌']
-			]);
+		promise.then(() => {
+			require('../utils/console')(table)
 		})
-
-		require('../utils/console')(table)
 	},
 };
