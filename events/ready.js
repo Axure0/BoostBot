@@ -23,20 +23,25 @@ module.exports = {
 				]);
 			}
 
-			mongoose.connect(mongoURI).then(() => {
-				table.addRowMatrix([
-					['MongoDB', '✅']
-				]);
-			})
-			.catch((e) => {
-				console.log(e)
+			const promise2 = new Promise(async (res, rej) => {
+				mongoose.connect(mongoURI).then(() => {
+					table.addRowMatrix([
+						['MongoDB', '✅']
+					]);
+				})
+				.catch((e) => {
+					console.log(e)
 
-				table.addRowMatrix([
-					['MongoDB', '❌']
-				]);
+					table.addRowMatrix([
+						['MongoDB', '❌']
+					]);
+				})
+				res()
 			})
 
-			res(table)
+			promise2.then(() => {
+				res(table)
+			})
 		})
 
 		promise.then((table) => {
