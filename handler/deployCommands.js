@@ -38,17 +38,13 @@ module.exports = () => {
                 { body: commands },
             );
 
-            table.addRowMatrix([
-                ['✅']
-            ]);
+            table.addRow('✅');
 
             require('../utils/console')(table)
         } catch (error) {
             console.log(error);
 
-            table.addRowMatrix([
-                ['❌']
-            ]);
+            table.addRow('❌');
 
             require('../utils/console')(table)
         }

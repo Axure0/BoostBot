@@ -14,27 +14,19 @@ module.exports = {
 	async execute(client) {
 		const promise = new Promise(async(res, rej) => {
 			if(client.isReady()) {
-				table.addRowMatrix([
-					['Ready', '✅']
-				]);
+				table.addRow('Ready', '✅');
 			} else {
-				table.addRowMatrix([
-					['Ready', '❌']
-				]);
+				table.addRow('Ready', '❌');
 			}
 
 			try {
 				mongoose.connect(mongoURI).then(() => {
-					table.addRowMatrix([
-						['MongoDB', '✅']
-					]);
+					table.addRow('MongoDB', '✅');
 				})
 			} catch (e) {
 				console.log(e)
 
-				table.addRowMatrix([
-					['MongoDB', '❌']
-				]);
+				table.addRow('MongoDB', '❌');
 			}
 
 			res()
