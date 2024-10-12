@@ -36,10 +36,10 @@ module.exports = {
 				]);
 			})
 
-			res()
+			res(table)
 		})
 
-		promise.then(() => {
+		promise.then((table) => {
 			require('../utils/console')(table)
 		})
 	},
