@@ -21,6 +21,7 @@ module.exports = {
 
 			try {
 				mongoose.connect(mongoURI).then(() => {
+					console.log("hey")
 					table.addRow('MongoDB', '✅');
 				})
 			} catch (e) {
