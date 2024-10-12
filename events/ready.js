@@ -21,16 +21,15 @@ module.exports = {
 
 			try {
 				mongoose.connect(mongoURI).then(() => {
-					console.log("hey")
 					table.addRow('MongoDB', '✅');
+					res()
 				})
 			} catch (e) {
 				console.log(e)
 
 				table.addRow('MongoDB', '❌');
+				res()
 			}
-
-			res()
 		})
 
 		promise.then(() => {
