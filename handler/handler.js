@@ -1,6 +1,8 @@
 const fs = require('fs')
 const path = require('path')
 
+const { AsciiTable3 } = require('ascii-table3')
+
 let table = new AsciiTable3('Slash Commands')
 .setHeading('Command', 'Loaded')
 
