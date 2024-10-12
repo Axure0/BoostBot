@@ -5,14 +5,14 @@ const { AsciiTable3 } = require('ascii-table3')
 
 const { mongoURI } = require('../config.json')
 
+let table = new AsciiTable3('Client')
+.setHeading('Event', 'Status')
+
 module.exports = {
 	name: Events.ClientReady,
 	once: true,
 	async execute(client) {
 		const promise = new Promise(async(res, rej) => {
-			let table = new AsciiTable3('Client')
-			.setHeading('Event', 'Status')
-
 			if(client.isReady()) {
 				table.addRowMatrix([
 					['Ready', '✅']
@@ -40,11 +40,11 @@ module.exports = {
 			})
 
 			promise2.then(() => {
-				res(table)
+				res()
 			})
 		})
 
-		promise.then((table) => {
+		promise.then(() => {
 			require('../utils/console')(table)
 		})
 	},
