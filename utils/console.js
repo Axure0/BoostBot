@@ -23,7 +23,7 @@ module.exports = (table) => {
   if(i >= 2) {
     let v = 0
     tables.map((x) => {
-        if(x.getTile() !== "Deployed") {
+        if(x.getTitle() !== "Deployed") {
             v += 1
         } else {
             return
