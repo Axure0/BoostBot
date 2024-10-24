@@ -11,11 +11,12 @@ function moveElm(arr, elm) {
         if(i === -1) return arr
 
         newArray.push(arr[i])
+        arr.splice(i, 1)
       }
     }
   
-    for (const x of arr) {
-      newArray.push(x)
+    for (const e of arr) {
+      newArray.push(e)
     }  
   
     return newArray
