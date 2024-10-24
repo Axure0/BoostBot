@@ -2,9 +2,6 @@ const { Events } = require('discord.js')
 
 const { prefix, ownerId } = require('../config.json')
 
-const fs = require('fs')
-const path = require('path')
-
 module.exports = {
     name: Events.MessageCreate,
     once: false,
@@ -13,7 +10,6 @@ module.exports = {
         const prefix1 = message.content.charAt(0)
 
         if(message.author.id !== ownerId) return
-        if(prefix1 !== prefix) return
 
         let args = String(spliced[1]).split(" ") || [spliced[1]]
 
@@ -21,6 +17,8 @@ module.exports = {
 
         const command = client.mcommands.get(args[0]);
         if (!command) return
+
+        if(prefix1 !== command?.prefix || prefix1 !== prefix) return
 
         try {
 			await command.execute(message, args, client);

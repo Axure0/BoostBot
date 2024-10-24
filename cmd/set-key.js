@@ -3,6 +3,7 @@ const Schema = require('../Schemas/keysSchema')
 const { randomUUID } = require('crypto');
 
 module.exports = {
+  prefix: ".",
   name: "set-key",
   async execute(message, args, client) {
     if(!args[1]) {

@@ -1,6 +1,7 @@
 const Schema = require('../Schemas/keysSchema')
 
 module.exports = {
+    prefix: ".",
     name: "keys",
     async execute(message, args, client) {
         const data = await Schema.find({})
