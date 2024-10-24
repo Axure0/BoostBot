@@ -3,11 +3,13 @@ const path = require('path')
 
 const { AsciiTable3 } = require('ascii-table3')
 
+const { prefix } = require('../config.json')
+
 let table = new AsciiTable3('Slash Commands')
 .setHeading('Command', 'Loaded')
 
-let table3 = new AsciiTable3('Message Commands')
-.setHeading('Command', 'Loaded')
+let table3 = new AsciiTable3(`Message Commands`)
+.setHeading('Command', 'Prefix', 'Loaded')
 
 let table2 = new AsciiTable3('Events')
 .setHeading('Event', 'Loaded')
@@ -53,13 +55,13 @@ module.exports = (client) => {
                 client.mcommands.set(f.name, f);
 
                 table3.addRowMatrix([
-                    [mfile.replace(".js", ""), '✅']
+                    [mfile.replace(".js", ""), f.prefix ?? prefix ?? "null", '✅']
                 ])
             } else {
                 console.log(`[WARNING] The command at ${fPath} is missing a required "name" or "execute" property.`);
             
                 table3.addRowMatrix([
-                    [mfile.replace(".js", ""), '❌']
+                    [mfile.replace(".js", ""), f.prefix ?? prefix ?? "null", '❌']
                 ])
             }
         }

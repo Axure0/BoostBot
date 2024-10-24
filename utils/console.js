@@ -34,7 +34,7 @@ module.exports = (table) => {
   }
   
   if(i >= 3) {
-    let newTables = moveElm(tables, ["Deployed", "Client", "Events"])
+    let newTables = moveElm(tables, ["Deployed", "Client", "Events", "Message Commands"])
 
     for(const t of newTables) {
         console.log(t.toString())
