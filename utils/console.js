@@ -6,7 +6,7 @@ function moveElm(arr, elm) {
 
     if(Array.isArray(elm)) {
       for(const e of elm) {
-        let i = arr.findIndex((x) => x?.getTitle() == elm)
+        let i = arr.findIndex((x) => x?.getTitle() == e)
 
         if(i === -1) return arr
 
