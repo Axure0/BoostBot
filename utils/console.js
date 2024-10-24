@@ -2,14 +2,19 @@ let tables = []
 let i = 0;
 
 function moveElm(arr, elm) {
-    let i = arr.findIndex((x) => x?.getTitle() == elm)
+    if(Array.isArray(elm)) {
+      for(const e of elm) {
+        let i = arr.findIndex((x) => x?.getTitle() == elm)
 
-    if(i === -1) return arr
-      
-    let oldArray = arr
+        if(i === -1) return arr
+
+        let oldArray = arr
+
+        oldArray.splice(i, 1)
+      }
+    }
+
     let newArray = [arr[i]]
-
-    oldArray.splice(i, 1)
   
     for (const e of arr) {
       newArray.push(e)
@@ -30,7 +35,7 @@ module.exports = (table) => {
   }
   
   if(i >= 3) {
-    let newTables = moveElm(tables, "Deployed")
+    let newTables = moveElm(tables, ["Deployed", "Client", "Events"])
 
     for(const t of newTables) {
         console.log(t.toString())
