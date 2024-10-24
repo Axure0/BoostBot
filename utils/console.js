@@ -2,6 +2,8 @@ let tables = []
 let i = 0;
 
 function moveElm(arr, elm) {
+    let newArray = []
+
     if(Array.isArray(elm)) {
       for(const e of elm) {
         let i = arr.findIndex((x) => x?.getTitle() == elm)
@@ -11,10 +13,9 @@ function moveElm(arr, elm) {
         let oldArray = arr
 
         oldArray.splice(i, 1)
+        newArray.push(arr[i])
       }
     }
-
-    let newArray = [arr[i]]
   
     for (const e of arr) {
       newArray.push(e)
